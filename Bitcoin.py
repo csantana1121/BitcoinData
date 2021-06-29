@@ -19,3 +19,4 @@ print(f'{disc}')
 print(f'Current price of {crypto} at {time}:')
 print(f'United States Dollars(USD): ${USD}')
 print(f'Euros(EUR): €{EURO}')
+
