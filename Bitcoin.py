@@ -34,12 +34,17 @@ def parseJson(Data):
     return currentvalues
 
 
-# print(f'{disc}')
-# print(f'Current price of {crypto} at {time}:')
-# print(f'United States Dollars(USD): ${USD}')
-# print(f'Euros(EUR): €{EURO}')
-# print(f'British pound sterlings(GBP): £{GBP}')
-# print(df)
+# Test 1: Check that expected print response is recorded
+# Test 2: Check that all vars used are not null/empty
+def PrintPriceIndex(currentvalues):
+    disc = Data['disclaimer']
+    crypto = Data['chartName']
+    print(f'{disc}')
+    print(f'Current price of {crypto} at {currentvalues[0]}:')
+    print(f'United States Dollars(USD): ${currentvalues[1]}')
+    print(f'Euros(EUR): €{currentvalues[2]}')
+    print(f'British pound sterlings(GBP): £{currentvalues[3]}')
+
 
 # Test 1: Check that dataframe is a 1 row 4 column table
 # Test 2: Check that parseJson function has worked and return a list of 4
@@ -52,6 +57,7 @@ def addtoPriceIndex():
     col_names = ['Date', 'USD', 'EURO', 'GBP']
     df = pd.DataFrame(columns=col_names)
     df.loc[len(df.index)] = parseJson(Data)
+    # print(df)
     engine = create_engine('mysql://root:codio@localhost/bitcoin')
     df.to_sql('Price_Index', con=engine, if_exists='append', index=False)
     return
@@ -59,4 +65,6 @@ def addtoPriceIndex():
 
 if __name__ == "__main__":
     Data = getBitcoindata()
+    PrintPriceIndex(parseJson(Data))
     addtoPriceIndex()
+    
