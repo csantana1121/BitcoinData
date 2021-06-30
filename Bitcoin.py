@@ -16,7 +16,7 @@ def getBitcoindata():
 # Test 1: Check that Data object is type json
 def convertJson(response):
     return response.json()
-  
+
   
 # Test 1: Check that currentvalues list is not empty
 # Test 2: Check that currentvalues list has 4 elements and not null
@@ -63,7 +63,7 @@ def addtoPriceIndex():
     # print(df)
     engine = create_engine('mysql://root:codio@localhost/bitcoin')
     df.to_sql('Price_Index', con=engine, if_exists='append', index=False)
-    return 
+    return
 
 
 if __name__ == "__main__":
