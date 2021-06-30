@@ -4,6 +4,7 @@ import pandas as pd
 import sqlalchemy
 from sqlalchemy import create_engine
 
+
 # Test 1: Check status code is 200
 # Test 2: Check that Data object is type json
 # Test 3: Check that Data is not empty
