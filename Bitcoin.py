@@ -14,6 +14,7 @@ def getBitcoindata():
     Data = response.json()
     return Data
 
+
 # Test 1: Check that currentvalues list is not empty
 # Test 2: Check that currentvalues list has 4 elements and not null
 # Test 3: Check that time is a date and other 3 vars are ints.
@@ -31,6 +32,7 @@ def parseJson(Data):
     GBP = Pounds['rate']
     currentvalues = [time, USD, EURO, GBP]
     return currentvalues
+
 
 # print(f'{disc}')
 # print(f'Current price of {crypto} at {time}:')
@@ -52,6 +54,7 @@ def addtoPriceIndex():
     df.loc[len(df.index)] = parseJson(Data)
     engine = create_engine('mysql://root:codio@localhost/bitcoin')
     df.to_sql('Price_Index', con=engine, if_exists='append', index=False)
+    return
 
 if __name__ == "__main__":
     Data = getBitcoindata()
