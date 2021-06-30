@@ -30,4 +30,4 @@ df = pd.DataFrame(columns = col_names)
 df.loc[len(df.index)] = [time, USD, EURO, GBP]
 #print(df)
 engine = create_engine('mysql://root:codio@localhost/bitcoin')
-df.to_sql('Price_Index', con = engine, if_exists='append',index=False)
+df.to_sql('Price_Index', con = engine, if_exists = 'append', index=False)
