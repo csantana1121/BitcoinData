@@ -6,15 +6,18 @@ from sqlalchemy import create_engine
 
 
 # Test 1: Check status code is 200
-# Test 2: Check that Data object is type json
 # Test 3: Check that Data is not empty
 def getBitcoindata():
     url = 'https://api.coindesk.com/v1/bpi/currentprice.json'
     response = requests.get(url)
-    Data = response.json()
-    return Data
+    return response
 
 
+# Test 1: Check that Data object is type json
+def convertJson(response):
+    return response.json()
+  
+  
 # Test 1: Check that currentvalues list is not empty
 # Test 2: Check that currentvalues list has 4 elements and not null
 # Test 3: Check that time is a date and other 3 vars are ints.
@@ -60,10 +63,11 @@ def addtoPriceIndex():
     # print(df)
     engine = create_engine('mysql://root:codio@localhost/bitcoin')
     df.to_sql('Price_Index', con=engine, if_exists='append', index=False)
-    return
+    return 
 
 
 if __name__ == "__main__":
-    Data = getBitcoindata()
+    response = getBitcoindata()
+    Data = convertJson(response)
     PrintPriceIndex(parseJson(Data))
     addtoPriceIndex()
