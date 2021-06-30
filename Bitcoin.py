@@ -56,6 +56,7 @@ def addtoPriceIndex():
     df.to_sql('Price_Index', con=engine, if_exists='append', index=False)
     return
 
+
 if __name__ == "__main__":
     Data = getBitcoindata()
     addtoPriceIndex()
