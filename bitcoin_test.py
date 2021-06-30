@@ -6,11 +6,9 @@ class TestFileName(unittest.TestCase):
     def test_url_connection(self):
         self.assertEqual(getBitcoindata().status_code, 200)
 
-
     def test_convertJson(self):
         self.assertTrue(len(convertJson(getBitcoindata())) > 0)
         self.assertNotEqual(parseJson(convertJson(getBitcoindata())), "")
-
 
     def test_parse_json(self):
         self.assertEqual(len(parseJson(convertJson(getBitcoindata()))), 4)
