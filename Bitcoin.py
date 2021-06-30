@@ -19,6 +19,7 @@ EUR = cur['EUR']
 EURO = EUR['rate']
 Pounds = cur['GBP']
 GBP = Pounds['rate']
+
 #print(f'{disc}')
 #print(f'Current price of {crypto} at {time}:')
 #print(f'United States Dollars(USD): ${USD}')
@@ -26,7 +27,7 @@ GBP = Pounds['rate']
 #print(f'British pound sterlings(GBP): £{GBP}')
 
 col_names = ['Date', 'USD', 'EURO', 'GBP']
-df = pd.DataFrame(columns = col_names)
+df = pd.DataFrame(columns= col_names)
 df.loc[len(df.index)] = [time, USD, EURO, GBP]
 #print(df)
 engine = create_engine('mysql://root:codio@localhost/bitcoin')
