@@ -17,7 +17,7 @@ def getBitcoindata():
 def convertJson(response):
     return response.json()
 
-  
+
 # Test 1: Check that currentvalues list is not empty
 # Test 2: Check that currentvalues list has 4 elements and not null
 # Test 3: Check that time is a date and other 3 vars are ints.

@@ -1,6 +1,7 @@
 import unittest
 from Bitcoin import getBitcoindata, parseJson, convertJson, addtoPriceIndex
 
+
 class TestFileName(unittest.TestCase):
     def test_url_connection(self):
         self.assertEqual(getBitcoindata().status_code, 200)
