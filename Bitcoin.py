@@ -81,8 +81,11 @@ def addtoPriceIndex():
 
 def addtoHistPriceIndex():
     col_names = ['Day', 'USD']
+    items = parsehistJson(Data)
     df = pd.DataFrame(columns=col_names)
-    df.loc[len(df.index)] = parsehistJson(Data)
+    for key,value in items.items():
+        df.loc[len(df.index)] = [key,value]
+    # print(df)
     engine = create_engine('mysql://root:codio@localhost/bitcoin')
     df.to_sql('Hist_Price_Index', con=engine, if_exists='replace', index=False)
 
@@ -91,13 +94,12 @@ if __name__ == "__main__":
     database_name = 'bitcoin'
     os.system('mysql -u root -pcodio -e "CREATE DATABASE IF NOT EXISTS '+database_name+'; "')
     os.system("mysql -u root -pcodio bitcoin < bitcoin.sql")
-    # os.system("mysql -u root -pcodio bitcoin < bitcoinhist.sql")
+    os.system("mysql -u root -pcodio bitcoin < bitcoinhist.sql")
     response = getBitcoindata()
     Data = convertJson(response)
     PrintPriceIndex(parseJson(Data))
     addtoPriceIndex()
-    os.system("mysqldump -u root -pcodio bitcoin > bitcoin.sql")
-    os.system("mysqldump -u root -pcodio bitcoin > bitcoinhist.sql")
     Data = convertJson(getDatafromlast30days())
     addtoHistPriceIndex()
-    
+    os.system("mysqldump -u root -pcodio bitcoin > bitcoin.sql")
+    os.system("mysqldump -u root -pcodio bitcoin > bitcoinhist.sql")
