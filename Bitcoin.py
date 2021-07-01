@@ -48,7 +48,7 @@ def parsehistJson(Data):
     disc = Data['disclaimer']
     USD = Data['bpi']
     return USD
-    
+
     
 # Test 1: Check that expected print response is recorded
 # Test 2: Check that all vars used are not null/empty
@@ -83,7 +83,7 @@ def addtoHistPriceIndex():
     col_names = ['Day', 'USD']
     items = parsehistJson(Data)
     df = pd.DataFrame(columns=col_names)
-    for key,value in items.items():
+    for key, value in items.items():
         df.loc[len(df.index)] = [key,value]
     # print(df)
     engine = create_engine('mysql://root:codio@localhost/bitcoin')
@@ -92,7 +92,8 @@ def addtoHistPriceIndex():
 
 if __name__ == "__main__":
     database_name = 'bitcoin'
-    os.system('mysql -u root -pcodio -e "CREATE DATABASE IF NOT EXISTS '+database_name+'; "')
+    os.system('mysql -u root -pcodio -e "CREATE DATABASE IF NOT EXISTS '
+              +database_name+'; "')
     os.system("mysql -u root -pcodio bitcoin < bitcoin.sql")
     os.system("mysql -u root -pcodio bitcoin < bitcoinhist.sql")
     response = getBitcoindata()
