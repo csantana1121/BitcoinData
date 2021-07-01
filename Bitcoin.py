@@ -1,6 +1,7 @@
 import requests
 import json
 import pandas as pd
+import os
 import sqlalchemy
 from sqlalchemy import create_engine
 
@@ -9,6 +10,12 @@ from sqlalchemy import create_engine
 # Test 3: Check that Data is not empty
 def getBitcoindata():
     url = 'https://api.coindesk.com/v1/bpi/currentprice.json'
+    response = requests.get(url)
+    return response
+
+
+def getDatafromlast30days():
+    url = 'https://api.coindesk.com/v1/bpi/historical/close.json'
     response = requests.get(url)
     return response
 
@@ -67,7 +74,12 @@ def addtoPriceIndex():
 
 
 if __name__ == "__main__":
+    database_name = 'bitcoin'
+    os.system('mysql -u root -pcodio -e "CREATE DATABASE IF NOT EXISTS '+database_name+'; "')
+    os.system("mysql -u root -pcodio bitcoin < bitcoin.sql")
     response = getBitcoindata()
     Data = convertJson(response)
     PrintPriceIndex(parseJson(Data))
     addtoPriceIndex()
+    os.system("mysqldump -u root -pcodio bitcoin > bitcoin.sql")
+    print(convertJson(getDatafromlast30days()))
