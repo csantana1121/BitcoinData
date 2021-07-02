@@ -105,8 +105,8 @@ def saveSQLtofile(filename, database_name):
 
 def plotData(database_name, table_name, filename):
     df = pd.read_sql_table(table_name, con=createEngine(database_name))
-    fig, ax  = plt.subplots()
-    ax.plot(df['Day'], df['USD'], label = 'USD')
+    fig, ax = plt.subplots()
+    ax.plot(df['Day'], df['USD'], label='USD')
     ax.set_xlabel('time')
     ax.set_ylabel('price')
     ax.set_title('Bitcoin Historical Price_Index')
@@ -128,5 +128,4 @@ if __name__ == "__main__":
     Data = convertJson(getDatafromlast30days())
     addtoHistPriceIndex()
     saveSQLtofile('bitcoin.sql', 'bitcoin')
-    plotData('bitcoin','Hist_Price_Index', 'bitcoin.sql')
-    
+    plotData('bitcoin', 'Hist_Price_Index', 'bitcoin.sql')
