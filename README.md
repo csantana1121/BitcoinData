@@ -14,6 +14,8 @@ to track price information on bitcoin to do the follow:
 ## To Do List
 
 - [ ] Generate graphs tracking all known price indexes of Bitcoin
+> Working beta version of graphing system:
+![Output](https://github.com/csantana1121/BitcoinData/blob/master/data/images/Historicalgraphbeta.png?raw=true)
 - [ ] Grab historical Bitcoin Data on user request
 > Currently stores the previous 30 days worth of Bitcoin price information
 - [ ] Add a graphical user interface to allow for the user to interact and ask for Bitcoin information

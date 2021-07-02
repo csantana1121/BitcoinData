@@ -2,6 +2,9 @@ import requests
 import json
 import pandas as pd
 import os
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
 import sqlalchemy
 from sqlalchemy import create_engine
 
@@ -90,17 +93,40 @@ def addtoHistPriceIndex():
     df.to_sql('Hist_Price_Index', con=engine, if_exists='replace', index=False)
 
 
-if __name__ == "__main__":
-    database_name = 'bitcoin'
+def loadSQLfromFile(filename, database_name):
     os.system('mysql -u root -pcodio -e "CREATE DATABASE IF NOT EXISTS '
               + database_name + '; "')
-    os.system("mysql -u root -pcodio bitcoin < bitcoin.sql")
-    os.system("mysql -u root -pcodio bitcoin < bitcoinhist.sql")
+    os.system("mysql -u root -pcodio " + database_name + " < " + filename)
+
+
+def saveSQLtofile(filename, database_name):
+    os.system("mysqldump -u root -pcodio " + database_name + " > " + filename)
+
+
+def plotData(database_name, table_name, filename):
+    df = pd.read_sql_table(table_name, con=createEngine(database_name))
+    fig, ax  = plt.subplots()
+    ax.plot(df['Day'], df['USD'], label = 'USD')
+    ax.set_xlabel('time')
+    ax.set_ylabel('price')
+    ax.set_title('Bitcoin Historical Price_Index')
+    ax.legend()
+    plt.show()
+
+
+def createEngine(database_name):
+    return create_engine('mysql://root:codio@localhost/' + 'bitcoin')
+
+
+if __name__ == "__main__":
+    loadSQLfromFile('bitcoin.sql', 'bitcoin')
     response = getBitcoindata()
     Data = convertJson(response)
-    PrintPriceIndex(parseJson(Data))
+    ParseData = parseJson(Data)
+    PrintPriceIndex(ParseData)
     addtoPriceIndex()
     Data = convertJson(getDatafromlast30days())
     addtoHistPriceIndex()
-    os.system("mysqldump -u root -pcodio bitcoin > bitcoin.sql")
-    os.system("mysqldump -u root -pcodio bitcoin > bitcoinhist.sql")
+    saveSQLtofile('bitcoin.sql', 'bitcoin')
+    plotData('bitcoin','Hist_Price_Index', 'bitcoin.sql')
+    
