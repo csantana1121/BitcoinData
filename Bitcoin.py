@@ -121,7 +121,7 @@ def plotData(database_name, table_name, filename):
         EURO = df['EURO']
         euros = []
         GBP = df['GBP']
-        pounds =[]
+        pounds = []
         time = df['Date']
         for value in USD:
             temp = float(value.replace(',', ''))
