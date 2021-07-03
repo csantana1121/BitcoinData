@@ -72,13 +72,15 @@ def PrintPriceIndex(currentvalues):
 # Test 4: Check that table Price_Index in bitcoin is made and not empty
 # Test 5: Check that Price_Index table is not overwritten and adds new
 # value each call
-def addtoPriceIndex():
+# option= append: to add at the end of the table
+# replace: to wipe the table clean and restart collecting new data
+def addtoPriceIndex(option):
     col_names = ['Date', 'USD', 'EURO', 'GBP']
     df = pd.DataFrame(columns=col_names)
     df.loc[len(df.index)] = parseJson(Data)
     # print(df)
     engine = create_engine('mysql://root:codio@localhost/bitcoin')
-    df.to_sql('Price_Index', con=engine, if_exists='append', index=False)
+    df.to_sql('Price_Index', con=engine, if_exists=option, index=False)
     return
 
 
@@ -106,12 +108,38 @@ def saveSQLtofile(filename, database_name):
 def plotData(database_name, table_name, filename):
     df = pd.read_sql_table(table_name, con=createEngine(database_name))
     fig, ax = plt.subplots()
-    ax.plot(df['Day'], df['USD'], label='USD')
-    ax.set_xlabel('time')
-    ax.set_ylabel('price')
-    ax.set_title('Bitcoin Historical Price_Index')
-    ax.legend()
-    plt.show()
+    if table_name == 'Hist_Price_Index':  
+        ax.plot(df['Day'], df['USD'], label='USD')
+        ax.set_xlabel('Day')
+        ax.set_ylabel('price')
+        ax.set_title('Bitcoin Historical Price_Index')
+        ax.legend()
+        plt.show()
+    else:
+        USD = df['USD']
+        dollar =[]
+        EURO = df['EURO']
+        euros = []
+        GBP = df['GBP']
+        pounds =[]
+        time = df['Date']
+        for value in USD:
+            temp = float(value.replace(',',''))
+            dollar.append(temp)
+        for value in EURO:
+            temp = float(value.replace(',',''))
+            euros.append(temp)
+        for value in GBP:
+            temp = float(value.replace(',',''))
+            pounds.append(temp)
+        ax.plot(time, pounds, label='GBP')
+        ax.plot(time, euros, label='EURO')
+        ax.plot(time, dollar, label='USD')
+        ax.set_xlabel('time')
+        ax.set_ylabel('price')
+        ax.set_title('Bitcoin Price_Index')
+        ax.legend()
+        plt.show()
 
 
 def createEngine(database_name):
@@ -124,8 +152,9 @@ if __name__ == "__main__":
     Data = convertJson(response)
     ParseData = parseJson(Data)
     PrintPriceIndex(ParseData)
-    addtoPriceIndex()
+    addtoPriceIndex('append')
     Data = convertJson(getDatafromlast30days())
     addtoHistPriceIndex()
     saveSQLtofile('bitcoin.sql', 'bitcoin')
     plotData('bitcoin', 'Hist_Price_Index', 'bitcoin.sql')
+    plotData('bitcoin', 'Price_Index', 'bitcoin.sql')
