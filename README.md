@@ -13,7 +13,7 @@ to track price information on bitcoin to do the follow:
     
 ## To Do List
 
-- [ ] Generate graphs tracking all known price indexes of Bitcoin
+- [x] Generate graphs tracking all known price indexes of Bitcoin
 > Working beta version of graphing system:
 ![Output](https://github.com/csantana1121/BitcoinData/blob/master/data/images/Historicalgraphbeta.png?raw=true)
 - [ ] Grab historical Bitcoin Data on user request
