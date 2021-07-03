@@ -108,7 +108,7 @@ def saveSQLtofile(filename, database_name):
 def plotData(database_name, table_name, filename):
     df = pd.read_sql_table(table_name, con=createEngine(database_name))
     fig, ax = plt.subplots()
-    if table_name == 'Hist_Price_Index':  
+    if table_name == 'Hist_Price_Index':
         ax.plot(df['Day'], df['USD'], label='USD')
         ax.set_xlabel('Day')
         ax.set_ylabel('price')
@@ -117,20 +117,20 @@ def plotData(database_name, table_name, filename):
         plt.show()
     else:
         USD = df['USD']
-        dollar =[]
+        dollar = []
         EURO = df['EURO']
         euros = []
         GBP = df['GBP']
         pounds =[]
         time = df['Date']
         for value in USD:
-            temp = float(value.replace(',',''))
+            temp = float(value.replace(',', ''))
             dollar.append(temp)
         for value in EURO:
-            temp = float(value.replace(',',''))
+            temp = float(value.replace(',', ''))
             euros.append(temp)
         for value in GBP:
-            temp = float(value.replace(',',''))
+            temp = float(value.replace(',', ''))
             pounds.append(temp)
         ax.plot(time, pounds, label='GBP')
         ax.plot(time, euros, label='EURO')
