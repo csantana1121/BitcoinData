@@ -1,3 +1,7 @@
+---
+permalink: /about.html
+---
+
 # Bitcoin Price Tracker
 
 ## Languages and Technology
