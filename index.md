@@ -11,7 +11,7 @@ to track price information on bitcoin to do the follow:
 * Export and save the database onto a cloud to allow it to be shared between devices
 * Allow the user to access historical data on the price of Bitcoin
 
-[Learn more about the project here](/about.html)
+[Learn more about the project here](./about.html)
 ## To Do List
 
 - [x] Generate graphs tracking all known price indexes of Bitcoin
